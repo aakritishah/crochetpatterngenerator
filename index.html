@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crochet Pattern Generator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 36px;
+      /* Increased font size for the title */
+    }
+
+    #pattern-container {
+      display: grid;
+      grid-template-columns: repeat(var(--width, 1), 20px);
+      gap: 2px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .pattern-cell {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      background-color: var(--cell-color, #ffffff);
+    }
+
+    #buttons-container,
+    #preset-buttons,
+    #yarn-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .preset-button,
+    .buy-yarn-button {
+      background-color: #7180AC;
+      color: white;
+      padding: 12px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 30px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #generate-button {
+      background-color: #2B4570;
+      color: white;
+      padding: 12px 36px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #stitch-counts {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #section-spacing {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Crochet Pattern Generator</h1>
+
+  <div id="section-spacing">
+    <label for="width">Enter width: </label>
+    <input type="number" id="width" placeholder="Width">
+
+    <label for="height">Enter height: </label>
+    <input type="number" id="height" placeholder="Height">
+
+    <label for="color">Choose color: </label>
+    <input type="color" id="color" value="#ffffff">
+
+    <button id="generate-button" onclick="generatePattern()">Generate Pattern</button>
+  </div>
+
+  <div id="buttons-container">
+    <div id="preset-buttons">
+      <button class="preset-button" onclick="setPreset('square')">Square</button>
+      <button class="preset-button" onclick="setPreset('small')">Small</button>
+      <button class="preset-button" onclick="setPreset('medium')">Medium</button>
+      <button class="preset-button" onclick="setPreset('large')">Large</button>
+      <button class="preset-button" onclick="setPreset('extra-large')">Extra Large</button>
+    </div>
+  </div>
+
+  <div id="stitch-counts"></div>
+
+  <div id="pattern-container"></div>
+
+  <script>
+    function generatePattern() {
+      const width = document.getElementById('width').value;
+      const height = document.getElementById('height').value;
+      const color = document.getElementById('color').value;
+      const patternContainer = document.getElementById('pattern-container');
+      const stitchCounts = document.getElementById('stitch-counts');
+      patternContainer.innerHTML = '';
+      stitchCounts.innerText = '';
+
+      patternContainer.style.setProperty('--width', width);
+
+      const actualWidth = width;
+      const actualHeight = height;
+
+      for (let i = 0; i < actualHeight; i++) {
+        for (let j = 0; j < actualWidth; j++) {
+          const cell = document.createElement('div');
+          cell.classList.add('pattern-cell');
+          cell.style.setProperty('--cell-color', color);
+          patternContainer.appendChild(cell);
+        }
+      }
+
+      stitchCounts.innerText = `Stitch Counts: Single Crochet - ${width}x${height}, Double Crochet - ${width / 2}x${height / 2}`;
+    }
+
+    function setPreset(size) {
+      const widthInput = document.getElementById('width');
+      const heightInput = document.getElementById('height');
+
+      switch (size) {
+        case 'square':
+          widthInput.value = 50;
+          heightInput.value = 50;
+          break;
+        case 'small':
+          widthInput.value = 54;
+          heightInput.value = 60;
+          break;
+        case 'medium':
+          widthInput.value = 60;
+          heightInput.value = 70;
+          break;
+        case 'large':
+          widthInput.value = 70;
+          heightInput.value = 80;
+          break;
+        case 'extra-large':
+          widthInput.value = 80;
+          heightInput.value = 80;
+          break;
+        default:
+          break;
+      }
+    }
+  </script>
+</body>
+
+</html>
